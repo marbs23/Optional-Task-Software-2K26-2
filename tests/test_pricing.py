@@ -58,8 +58,7 @@ def test_quote_applies_discount_and_shipping(database, category, price, shipping
 def test_saved_order_matches_quote(database, category, price, shipping, subtotal, discount, delivery, total):
     customer, product = seed(database, category, price)
     service = OrderService(database)
-    order = service.save(customer, "Calle 1", "Lima", "1", shipping,
-                         order_input(customer, product, shipping).items)
+    order = service.create(order_input(customer, product, shipping))
     assert (order["subtotal_cents"], order["discount_cents"], order["shipping_cents"], order["total_cents"]) == (
         subtotal, discount, delivery, total)
     assert order["customer_category"] == category
