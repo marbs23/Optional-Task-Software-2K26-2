@@ -10,7 +10,7 @@
 | Perfil de calidad (Python) | Sonar way core (built-in, 232 reglas) |
 | Código original (sin pruebas) | tag `pre-refactor` (`969cbdb`) |
 | Línea base con pruebas | tag `baseline-tests` (`6e94ad9`), mismo código de aplicación |
-| Revisión final | _pendiente de commit_ |
+| Revisión final | tag `refactor-final`; código final en `45cd976` |
 
 ## 2. Cómo reproducir
 
@@ -317,9 +317,12 @@ classDiagram
 | Issues / bugs / vulnerabilidades | 0 / 0 / 0 | 0 / 0 / 0 |
 | Duplicación | 0,0 % | 0,0 % |
 
+**Pruebas y cobertura después:** ![](images/despues-pytest.png)
+
 **SonarQube después:**
 
 ![Resumen final](images/despues-sonar-resumen.png)
+![Cobertura global por carpeta](images/despues-sonar-cobertura-global.png)
 ![Cobertura de main.py](images/despues-sonar-main-cobertura.png)
 ![Issues](images/despues-sonar-issues.png)
 ![Perfil de calidad](images/despues-sonar-perfil-calidad.png)
