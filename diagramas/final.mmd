@@ -1,0 +1,54 @@
+classDiagram
+    class Database {
+        +str path
+        +connect() Connection
+        +initialize() None
+    }
+    class OrderService {
+        +Database database
+        +create(data) dict
+        +update(order_id, data) dict
+        +quote(data) dict
+        +get(order_id) dict
+        +list() list
+        +confirm(order_id) dict
+        +cancel(order_id) dict
+        +delete(order_id) None
+        +notifications(order_id) list
+        -_find(connection, order_id) Row
+        -_pending(connection, order_id, message) Row
+        -_detail(connection, order_id) dict
+        -_price(connection, data) tuple
+        -_values(data, category, pricing) tuple
+        -_save_lines(connection, order_id, lines) dict
+    }
+    class OrderInput {
+        +int customer_id
+        +str address
+        +str city
+        +str postal_code
+        +str shipping
+        +list~ItemInput~ items
+        +unique_products() OrderInput
+    }
+    class ItemInput {
+        +int product_id
+        +int quantity
+    }
+    class DomainError {
+        +int status_code
+        +str detail
+    }
+    class NotFound {
+        +int status_code = 404
+    }
+    class Conflict {
+        +int status_code = 409
+    }
+    OrderService --> Database : usa
+    OrderService ..> OrderInput : recibe
+    OrderService ..> NotFound : lanza
+    OrderService ..> Conflict : lanza
+    NotFound --|> DomainError
+    Conflict --|> DomainError
+    OrderInput "1" *-- "1..*" ItemInput : items
