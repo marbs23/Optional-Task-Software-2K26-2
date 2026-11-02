@@ -7,6 +7,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from app import customers, orders, products
+from app.errors import DomainError
 from app.database import Database
 
 
@@ -27,6 +28,10 @@ def create_app(database_path=None):
     @application.exception_handler(sqlite3.OperationalError)
     async def database_error(request: Request, error: sqlite3.OperationalError):
         return JSONResponse(status_code=503, content={"detail": "Base de datos no disponible; reintente más tarde"})
+
+    @application.exception_handler(DomainError)
+    async def domain_error(request: Request, error: DomainError):
+        return JSONResponse(status_code=error.status_code, content={"detail": error.detail})
 
     return application
 
