@@ -317,7 +317,25 @@ classDiagram
 | Issues / bugs / vulnerabilidades | 0 / 0 / 0 | 0 / 0 / 0 |
 | Duplicación | 0,0 % | 0,0 % |
 
-Capturas "después": _pendiente de añadir en `images/despues-*.png`_.
+**SonarQube después:**
+
+![Resumen final](images/despues-sonar-resumen.png)
+![Cobertura de main.py](images/despues-sonar-main-cobertura.png)
+![Issues](images/despues-sonar-issues.png)
+![Perfil de calidad](images/despues-sonar-perfil-calidad.png)
+
+**API después** (base vacía, mismo recorrido; resultados idénticos a los de la sección 3.3):
+
+| Paso | Resultado | Captura |
+| --- | --- | --- |
+| `POST /orders/quote` | 200: 5000, 500, 1000, 5500 | ![](images/despues-api-01-cotizacion.png) |
+| `POST /orders` | 201, `pending`, mismos importes | ![](images/despues-api-02-crear-pedido.png) |
+| `POST /orders/1/confirm` | 200, `confirmed` | ![](images/despues-api-03-confirmar.png) |
+| `GET /products/1` | stock 3 | ![](images/despues-api-04-stock.png) |
+| `GET /orders/1/notifications` | 1 notificación | ![](images/despues-api-05-notificaciones.png) |
+| `POST /orders/1/confirm` (repetido) | 409 "El pedido ya no está pendiente" | ![](images/despues-api-06-confirmar-409.png) |
+
+Las rutas, los códigos y el texto de `detail` no cambiaron tras sustituir `HTTPException` por excepciones de dominio.
 
 La única línea sin cubrir sigue siendo `uvicorn.run` (ahora `main.py:43`). El porcentaje baja una centésima solo porque el código tiene menos líneas (297 en vez de 303) y esa línea pesa más. El manejador nuevo está cubierto por las pruebas de 404 y 409.
 
